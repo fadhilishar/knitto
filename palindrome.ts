@@ -1,12 +1,8 @@
 function isPalindrome(str: string): boolean {
-    let left=0
-    let right=str.length-1
-    for (;left<right;){
-        if (str.charAt(left)!=str.charAt(right)){
+    for (let i=0;i<str.length/2;i++){
+        if (str.charAt(i)!=str.charAt(str.length-1-i)){
             return false
         }
-        left++
-        right--
     }
     return true
 }

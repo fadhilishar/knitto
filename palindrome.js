@@ -1,13 +1,8 @@
 function isPalindrome(str){
-    // const str = num.toString()
-    let left=0
-    let right=str.length-1
-    for (;left<right;){
-        if (str[left]!=str[right]){
+    for (let i=0;i<str.length/2;i++){
+        if (str[i]!=str[str.length-1-i]){
             return false
         }
-        left++
-        right--
     }
     return true
 }

@@ -23,4 +23,3 @@ process.stdin.once('data', function (data) {
     fizzBuzz(num);
     process.exit();
 });
-// fizzBuzz()
