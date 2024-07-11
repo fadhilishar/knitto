@@ -1,3 +1,5 @@
+DROP PROCEDURE IF EXISTS extract_kurs_pajak;
+
 DELIMITER //
 
 CREATE PROCEDURE extract_kurs_pajak()
@@ -10,20 +12,20 @@ BEGIN
     END;
 
     START TRANSACTION;
+    
+-- Buat tabel kurs_pajak jika belum ada
+	CREATE TABLE IF NOT EXISTS kurs_pajak (
+		id_ksm_kurs_pajak INT,
+		kurs_rate DECIMAL(20,4),
+		tgl DATE,
+		curr_id INT
+	);
 
     -- Cek apakah tabel kurs_pajak sudah ada isinya
     IF (SELECT COUNT(*) FROM kurs_pajak) > 0 THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Tabel kurs_pajak sudah berisi data. Proses dihentikan.';
     ELSE
-        -- Buat tabel kurs_pajak jika belum ada
-        CREATE TABLE IF NOT EXISTS kurs_pajak (
-            id_ksm_kurs_pajak INT,
-            kurs_rate DECIMAL(20,4),
-            tgl DATE,
-            curr_id INT
-        );
-
         -- Insert data dari ksm_kurs_pajak ke kurs_pajak
         INSERT INTO kurs_pajak (id_ksm_kurs_pajak, kurs_rate, tgl, curr_id)
         SELECT 
